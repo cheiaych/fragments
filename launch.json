@@ -1,0 +1,7 @@
+{
+    "name": "Attach to node",
+    "type": "nodemon",
+    "request": "attach",
+    "restart": true,
+    "port": 9229
+}
