@@ -19,11 +19,11 @@ const crypto = require('crypto');
         status: 'error',
         error: {
           'message': 'not found',
-          'code': 404,
+          'code': 404
         },
       });
     }
-  };
+  }
 
   async function getById (req, res) {
     try {
@@ -42,6 +42,6 @@ const crypto = require('crypto');
         },
       });
     }
-  };
+  }
 
   module.exports = { getByUser, getById }
