@@ -1,6 +1,7 @@
 //Post route handling
 require('dotenv').config()
 const { Fragment } = require('../../model/fragment');
+const crypto = require('crypto');
 
 module.exports = async (req, res) => {
   // TODO: this is just a placeholder to get something working...
@@ -8,7 +9,7 @@ module.exports = async (req, res) => {
   try {
     const data = req.body;
     const type = req.headers['content-type']
-    const fragment = new Fragment({ownerId: req.user, type: type});
+    const fragment = new Fragment({ownerId: crypto.createHash('sha256').update(req.user).digest('hex'), type: type});
     await fragment.save();
     await fragment.setData(data);
     res.set('Location', process.env.API_URL + '/fragments/:' + fragment.id)

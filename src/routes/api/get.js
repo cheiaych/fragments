@@ -8,7 +8,7 @@ const crypto = require('crypto');
   // TODO: this is just a placeholder to get something working...
   async function getByUser (req, res) {
     try {
-      const value = await Fragment.byUser(req.user);
+      const value = await Fragment.byUser(crypto.createHash('sha256').update(req.user).digest('hex'));
       res.status(200).json({
         'status': 'ok',
         'fragments': value
@@ -18,7 +18,7 @@ const crypto = require('crypto');
       res.status(404).json({
         status: 'error',
         error: {
-          'message': 'not found',
+          'message': err,
           'code': 404
         },
       });
@@ -27,7 +27,7 @@ const crypto = require('crypto');
 
   async function getById (req, res) {
     try {
-      const value = await Fragment.byId(req.user, req.params.id)
+      const value = await Fragment.byId(crypto.createHash('sha256').update(req.user).digest('hex'), req.params.id)
       res.status(200).json({
         'status': 'ok',
         'fragment': value
