@@ -2,7 +2,7 @@ const request = require('supertest');
 
 const app = require('../../src/app');
 
-describe('POST /v1/fragment', () => {
+describe('POST /v1/fragments', () => {
   test('Authenticated user posting valid fragment', async () => {
       const res = await request(app)
       .post('/v1/fragments')

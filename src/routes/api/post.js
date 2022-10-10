@@ -28,7 +28,7 @@ module.exports = async (req, res) => {
   catch (err) {
     res.status(500).json({
       'status': 'Error',
-      'message': err
+      'message': err.message
     });
   }
 };
