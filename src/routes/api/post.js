@@ -10,8 +10,8 @@ module.exports = async (req, res) => {
     const data = req.body;
     const type = req.headers['content-type']
     const fragment = new Fragment({ownerId: crypto.createHash('sha256').update(req.user).digest('hex'), type: type});
-    await fragment.save();
     await fragment.setData(data);
+    await fragment.save();
     res.set('Location', process.env.API_URL + '/fragments/:' + fragment.id)
     res.status(201).json({
       'status': 'ok',
