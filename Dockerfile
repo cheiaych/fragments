@@ -1,6 +1,6 @@
 #Instructions for Docker
 
-#Docker image from node version 16.13.2
+#Docker image from alpine node version 16.3.16
 FROM node:16-alpine3.16@sha256:2175727cef5cad4020cb77c8c101d56ed41d44fbe9b1157c54f820e3d345eab1
 
 LABEL maintainer = "Jordan Hui <jhui19@myseneca.ca>"
