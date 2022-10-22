@@ -15,12 +15,26 @@ const {
 } = require('./data');
 const { hasUncaughtExceptionCaptureCallback } = require('process');
 
+const validTypes = [
+  `text/plain`,
+  `application/json`,
+  /*
+  `text/markdown`,
+  `text/html`,
+  `image/png`,
+  `image/jpeg`,
+  `image/webp`,
+  `image/gif`,
+  */
+];
+
 class Fragment {
+
   constructor({ id = randomUUID(), ownerId = '', created = new Date(Date.now()), updated = new Date(Date.now()), type = '', size = 0 }) {
     // TODO
     if (ownerId && type) {
       try {
-        if (contentType.parse(type).type === 'text/plain') {
+        if (validTypes.includes(contentType.parse(type).type)) {
           this.ownerId = ownerId;
           this.type = type;
         }
