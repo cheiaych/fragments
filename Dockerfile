@@ -31,7 +31,7 @@ COPY ./src ./src
 COPY ./tests/.htpasswd ./tests/.htpasswd
 
 #Start container by running server
-CMD npm start
+CMD ["npm", "start"]
 
 #Running on port 8080
 EXPOSE 8080
