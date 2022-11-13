@@ -6,7 +6,7 @@
 const express = require('express');
 const contentType = require('content-type');
 
-var { getByUser, getById } = require('./get');
+var { getByUser, getByUserExpand, getById, getByIdInfo } = require('./get');
 const { Fragment } = require('../../model/fragment');
 
 // Create a router on which to mount our API endpoints
@@ -18,8 +18,16 @@ router.get('/fragments', async (req, res) => {
 })
 
 // Other routes will go here later on...
+router.get('/fragments/?expand=1', async (req, res) => {
+  getByUserExpand(req, res);
+})
+
 router.get('/fragments/:id', async (req, res) => {
   await getById(req, res);
+})
+
+router.get('/fragments/:id/info', async (req, res) => {
+  await getByIdInfo(req, res);
 })
 
 // Support sending various Content-Types on the body up to 5M in size

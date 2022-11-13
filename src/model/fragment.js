@@ -18,9 +18,9 @@ const { hasUncaughtExceptionCaptureCallback } = require('process');
 const validTypes = [
   `text/plain`,
   `application/json`,
-  /*
   `text/markdown`,
   `text/html`,
+  /*
   `image/png`,
   `image/jpeg`,
   `image/webp`,
@@ -165,7 +165,7 @@ class Fragment {
    */
   get formats() {
     // TODO
-    return ['text/plain'];
+    return validTypes;
   }
 
   /**
@@ -176,7 +176,7 @@ class Fragment {
   static isSupportedType(value) {
     // TODO
     try {
-      if (contentType.parse(value).type == 'text/plain') {
+      if (validTypes.includes(contentType.parse(value).type)) {
         return true;
       }
       else {
