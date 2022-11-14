@@ -23,11 +23,6 @@ router.get('/fragments', async (req, res) => {
 })
 
 // Other routes will go here later on...
-router.get('/fragments/?expand=1', async (req, res) => {
-  
-  
-})
-
 router.get('/fragments/:id', async (req, res) => {
   await getById(req, res);
 })
