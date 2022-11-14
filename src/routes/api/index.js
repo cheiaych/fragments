@@ -14,12 +14,18 @@ const router = express.Router();
 
 // Define our first route, which will be: GET /v1/fragments
 router.get('/fragments', async (req, res) => {
-  getByUser(req, res);
+  if (req.query.expand == '1') {
+    getByUserExpand(req, res);
+  }
+  else {
+    getByUser(req, res);
+  }
 })
 
 // Other routes will go here later on...
 router.get('/fragments/?expand=1', async (req, res) => {
-  getByUserExpand(req, res);
+  
+  
 })
 
 router.get('/fragments/:id', async (req, res) => {

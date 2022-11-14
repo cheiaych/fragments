@@ -6,6 +6,14 @@ const MarkdownIt = require ('markdown-it');
 const app = require('../../src/app');
 
 describe('GET /v1/fragments', () => {
+  beforeAll(async () => {
+    const testPost1 = await request(app)
+      .post('/v1/fragments')
+      .auth('user1@email.com', 'password1')
+      .set('Content-Type', 'text/plain')
+      .send('This is a plaintext test')
+  });
+
   // If the request is missing the Authorization header, it should be forbidden
   test('unauthenticated requests are denied', () => request(app).get('/v1/fragments').expect(401));
 

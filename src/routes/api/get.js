@@ -34,9 +34,14 @@ const MarkdownIt = require ('markdown-it');
   async function getByUserExpand (req, res) {
     try {
       const value = await Fragment.byUser(crypto.createHash('sha256').update(req.user).digest('hex'));
+      var fragmentsMeta = [];
+      for(var i = 0; i < value.length; i++) {
+        const meta = await Fragment.byId(crypto.createHash('sha256').update(req.user).digest('hex'), value[i]);
+        fragmentsMeta.push(meta);
+      }
       res.status(200).json({
         'status': 'ok',
-        'fragments': value
+        'fragments': fragmentsMeta
       });
     }
     catch (err) {
