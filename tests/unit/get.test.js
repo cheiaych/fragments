@@ -65,7 +65,7 @@ describe('GET /v1/fragments/:id', () => {
       .post('/v1/fragments')
       .auth('user1@email.com', 'password1')
       .set('Content-Type', 'application/json')
-      .send(JSON.stringify(jsonData))
+      .send(jsonData)
     id.push(testPost2.body['fragment']['id']);
 
     const testPost3 = await request(app)
