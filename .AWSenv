@@ -1,0 +1,8 @@
+# HTTP Port (defaults to 8080)
+PORT=8080
+
+# AWS Amazon Cognito User Pool ID (use your User Pool ID)
+AWS_COGNITO_POOL_ID=us-east-1_VDwTKmwCb
+
+# AWS Amazon Cognito Client App ID (use your Client App ID)
+AWS_COGNITO_CLIENT_ID=s7is3bgdek4qqsimq723hjk32
