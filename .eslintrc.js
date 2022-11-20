@@ -20,7 +20,7 @@ module.exports = {
         "@typescript-eslint"
     ],
     "ignorePatterns": [
-        'tests/integration/'
+        '/tests/integration/'
     ],
     "rules": {
         '@typescript-eslint/no-var-requires': 0,
