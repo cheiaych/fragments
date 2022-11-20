@@ -57,6 +57,7 @@ const MarkdownIt = require ('markdown-it');
 
   async function getById (req, res) {
     try {
+      var mdi = new MarkdownIt();
       const splitId = (req.params.id).split('.')
       const value = await Fragment.byId(crypto.createHash('sha256').update(req.user).digest('hex'), splitId[0]);
       var data = await value.getData();
@@ -77,7 +78,6 @@ const MarkdownIt = require ('markdown-it');
                 data = data.toString();
                 break;
               case 'html':
-                var mdi = new MarkdownIt();
                 data = mdi.render(data.toString());
                 break;
               case 'txt':
@@ -121,7 +121,6 @@ const MarkdownIt = require ('markdown-it');
               data = data.toString();
               break;
           case 'text/markdown':
-              var mdi = new MarkdownIt();
               data = mdi.render(data.toString());
               break;        
           case 'text/html':

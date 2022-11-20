@@ -19,8 +19,12 @@ module.exports = {
     "plugins": [
         "@typescript-eslint"
     ],
+    "ignorePatterns": [
+        'tests/integration/'
+    ],
     "rules": {
         '@typescript-eslint/no-var-requires': 0,
-        '@typescript-eslint/no-unused-vars': "off"
+        '@typescript-eslint/no-unused-vars': "off",
+        '@typescript-eslint/no-redeclare': "off"
     }
 }
