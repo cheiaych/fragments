@@ -115,13 +115,33 @@ const MarkdownIt = require ('markdown-it');
             break;
         }
       }
+      else {
+        switch (value.type) {
+          case 'text/plain':
+              data = data.toString();
+              break;
+          case 'text/markdown':
+              var mdi = new MarkdownIt();
+              data = mdi.render(data.toString());
+              break;        
+          case 'text/html':
+              data = data.toString();
+              break;
+          case 'application/json':
+              data = JSON.parse(data.toString());
+              break;
+        }
+      }
       
-      res.status(200).json({
+      /*res.status(200).json({
         'status': 'ok',
         'content-type': value.type,
         'content-length': value.size,
         'data': data
-      });
+      });*/
+      res.set('status', 'ok')
+      res.set('content-type', value.type);
+      res.send(data);
     }
     catch (err) {
       if (err.toString().includes('Invalid conversion for fragment of type')) {

@@ -22,7 +22,7 @@ describe('POST /v1/fragments', () => {
       .auth('user1@email.com', 'password1')
       .set('Content-Type', 'application/msword')
       .send("This is a test");
-      expect(res.statusCode).toBe(500);
+      expect(res.statusCode).toBe(415);
     });
 
   test('Unauthenticated user cannot access post route', async () => {

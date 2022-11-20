@@ -12,7 +12,7 @@ module.exports = async (req, res) => {
     const fragment = new Fragment({ownerId: crypto.createHash('sha256').update(req.user).digest('hex'), type: type});
     await fragment.setData(data);
     await fragment.save();
-    res.set('Location', process.env.API_URL + '/fragments/:' + fragment.id)
+    res.set('Location', process.env.API_URL + '/fragments/' + fragment.id)
     res.status(201).json({
       'status': 'ok',
       'fragment': {
@@ -26,9 +26,17 @@ module.exports = async (req, res) => {
     });
   }
   catch (err) {
-    res.status(500).json({
-      'status': 'Error',
-      'message': err.message
-    });
+    if (err.message == 'type is invalid') {
+      res.status(415).json({
+        'status': 'Error',
+        'message': err.message
+      });
+    }
+    else {
+      res.status(500).json({
+        'status': 'Error',
+        'message': err.message
+      });
+    }
   }
 };

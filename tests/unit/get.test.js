@@ -94,29 +94,25 @@ describe('GET /v1/fragments/:id', () => {
   test('authenticated user gets an existing fragment by id (text/plain type)', async () => {
     const res = await request(app).get('/v1/fragments/' + id[0]).auth('user1@email.com', 'password1');
     expect(res.statusCode).toBe(200);
-    expect(res.body.status).toBe('ok');
-    expect((res.body['data'])).toBeDefined();
+    expect(res.body).toBeDefined();
   });
 
   test('authenticated user gets an existing fragment by id (application/json type)', async () => {
     const res = await request(app).get('/v1/fragments/' + id[1]).auth('user1@email.com', 'password1');
     expect(res.statusCode).toBe(200);
-    expect(res.body.status).toBe('ok');
-    expect((res.body['data'])).toBeDefined();
+    expect(res.body).toBeDefined();
   });
 
   test('authenticated user gets an existing fragment by id (text/markdown type)', async () => {
     const res = await request(app).get('/v1/fragments/' + id[2]).auth('user1@email.com', 'password1');
     expect(res.statusCode).toBe(200);
-    expect(res.body.status).toBe('ok');
-    expect((res.body['data'])).toBeDefined();
+    expect(res.body).toBeDefined();
   });
 
   test('authenticated user gets an existing fragment by id (text/html type)', async () => {
     const res = await request(app).get('/v1/fragments/' + id[3]).auth('user1@email.com', 'password1');
     expect(res.statusCode).toBe(200);
-    expect(res.body.status).toBe('ok');
-    expect((res.body['data'])).toBeDefined();
+    expect(res.body).toBeDefined();
   });
 
   //Testing get /fragments/:id.ext for conversion
@@ -135,11 +131,9 @@ describe('GET /v1/fragments/:id', () => {
   });*/
 
   test('authenticated user gets an existing fragment by id and valid conversion (text/markdown type)', async () => {
-    var mdi = new MarkdownIt();
     const res = await request(app).get('/v1/fragments/' + id[2] + '.html').auth('user1@email.com', 'password1');
     expect(res.statusCode).toBe(200);
-    expect(res.body.status).toBe('ok');
-    expect((res.body['data'])).toBe(mdi.render('#This is a markdown test'));
+    expect(res.text).toContain('<p>#This is a markdown test</p>');
   });
 
   /*test('authenticated user gets an existing fragment by id and valid conversion (text/html type)', async () => {
