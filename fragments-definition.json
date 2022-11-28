@@ -37,6 +37,10 @@
         {
           "name": "PORT",
           "value": "8080"
+        },
+        {
+          "name": "API_URL",
+          "value": "EC2Co-EcsEl-14SKZ6ZRCW383-1125512287.us-east-1.elb.amazonaws.com:8080"
         }
       ],
       "resourceRequirements": null,
