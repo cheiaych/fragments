@@ -7,6 +7,7 @@ const express = require('express');
 const contentType = require('content-type');
 
 var { getByUser, getByUserExpand, getById, getByIdInfo } = require('./get');
+var { deleteFragment } = require('./delete');
 const { Fragment } = require('../../model/fragment');
 
 // Create a router on which to mount our API endpoints
@@ -47,5 +48,10 @@ express.raw({
 
 // Use a raw body parser for POST, which will give a `Buffer` Object or `{}` at `req.body`
 router.post('/fragments', rawBody(), require('./post'));
+
+//Routing for DELETE
+router.delete('/fragments/:id', async (req, res) => {
+  await deleteFragment(req, res);
+})
 
 module.exports = router;
