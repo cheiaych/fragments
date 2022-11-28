@@ -82,15 +82,15 @@ jobs:
           # Use the image we just built and pushed to ECR for this tag
           image: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPO }}:${{ env.VERSION_TAG }}
           environment-variables: |
-          LOG_LEVEL=info
-          NODE_ENV=production
-          AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_SESSION_TOKEN=${{ secrets.AWS_SESSION_TOKEN }}
-          AWS_COGNITO_POOL_ID=us-east-1_H2XDCTYw6
-          AWS_COGNITO_CLIENT_ID=14poc3rq07njou4jodj2hu1qcc
-          API_URL=EC2Co-EcsEl-14SKZ6ZRCW383-1125512287.us-east-1.elb.amazonaws.com:8080
-          AWS_S3_BUCKET_NAME=jhui-fragments
+            LOG_LEVEL=info
+            NODE_ENV=production
+            AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            AWS_SESSION_TOKEN=${{ secrets.AWS_SESSION_TOKEN }}
+            AWS_COGNITO_POOL_ID=us-east-1_H2XDCTYw6
+            AWS_COGNITO_CLIENT_ID=14poc3rq07njou4jodj2hu1qcc
+            API_URL=EC2Co-EcsEl-14SKZ6ZRCW383-1125512287.us-east-1.elb.amazonaws.com:8080
+            AWS_S3_BUCKET_NAME=jhui-fragments
 
       - name: Deploy Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
