@@ -9,12 +9,16 @@ user1@email.com:password1
 # Body of the request goes in ```...``` when it's a string
 ```This is a fragment!```
 
+HTTP/1.1 201
+[Captures]
+url: header "Location"
+
 # 2. GET expanded fragments for user
-GET http://localhost:8080/v1/fragments/?expand=1
+GET {{url}}/info
 [BasicAuth]
 user1@email.com:password1
 
 #First element in expanded fragment array should have type 'text/plain'
 HTTP/1.1 200
 [Asserts]
-jsonpath "$.fragments[0].type" contains "text/plain"
+jsonpath "$.fragment.type" contains "text/plain"

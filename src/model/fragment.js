@@ -86,7 +86,7 @@ class Fragment {
       throw new Error('fragment with id ' + id + 'does not exist');
     }
     else {
-      return value;
+      return new Fragment(value);
     }
   }
 
