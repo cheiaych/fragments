@@ -1,4 +1,4 @@
-# texts/integration/lab-9-s3.hurl
+# tests/integration/lab-9-s3.hurl
 # Authenitcated post to v1/fragments (s3)
 POST http://localhost:8080/v1/fragments
 Content-Type: text/plain
