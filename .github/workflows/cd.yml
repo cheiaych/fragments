@@ -91,6 +91,7 @@ jobs:
             AWS_COGNITO_CLIENT_ID=14poc3rq07njou4jodj2hu1qcc
             API_URL=EC2Co-EcsEl-14SKZ6ZRCW383-1125512287.us-east-1.elb.amazonaws.com:8080
             AWS_S3_BUCKET_NAME=jhui-fragments
+            AWS_DYNAMODB_TABLE_NAME=fragments
 
       - name: Deploy Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
