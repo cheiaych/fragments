@@ -4,7 +4,7 @@ const crypto = require('crypto');
 async function deleteFragment (req, res) {
   const splitId = (req.params.id).split('.')
   try {
-    Fragment.delete(crypto.createHash('sha256').update(req.user).digest('hex'), splitId[0]);
+    await Fragment.delete(crypto.createHash('sha256').update(req.user).digest('hex'), splitId[0]);
     res.status(200).json({
       'status': 'ok',
     });

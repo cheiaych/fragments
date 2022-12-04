@@ -198,11 +198,8 @@ async function deleteFragment(ownerId, id) {
   const DynamoCommand = new DeleteCommand(DynamoParams);
 
   try {
-    // Wait for the data to come back from AWS
-    const data = await ddbDocClient.send(DynamoCommand);
-    // We may or may not get back any data (e.g., no item found for the given key).
-    // If we get back an item (fragment), we'll return it.  Otherwise we'll return `undefined`.
-    return data?.Item;
+    // Run delete command
+    await ddbDocClient.send(DynamoCommand);
   } catch (err) {
     logger.warn({ err, DynamoParams }, 'error deleting fragment from DynamoDB');
     throw err;
