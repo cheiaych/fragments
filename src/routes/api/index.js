@@ -49,6 +49,8 @@ express.raw({
 // Use a raw body parser for POST, which will give a `Buffer` Object or `{}` at `req.body`
 router.post('/fragments', rawBody(), require('./post'));
 
+router.put('/fragments/:id', rawBody(), require('./put'));
+
 //Routing for DELETE
 router.delete('/fragments/:id', async (req, res) => {
   await deleteFragment(req, res);

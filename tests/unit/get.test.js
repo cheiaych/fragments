@@ -94,57 +94,58 @@ describe('GET /v1/fragments/:id', () => {
   test('authenticated user gets an existing fragment by id (text/plain type)', async () => {
     const res = await request(app).get('/v1/fragments/' + id[0]).auth('user1@email.com', 'password1');
     expect(res.statusCode).toBe(200);
-    expect(res.body).toBeDefined();
+    expect(res.text).toBe('This is a plaintext test');
   });
 
   test('authenticated user gets an existing fragment by id (application/json type)', async () => {
     const res = await request(app).get('/v1/fragments/' + id[1]).auth('user1@email.com', 'password1');
     expect(res.statusCode).toBe(200);
-    expect(res.body).toBeDefined();
+    expect(JSON.parse(res.text)).toStrictEqual(jsonData);
   });
 
   test('authenticated user gets an existing fragment by id (text/markdown type)', async () => {
     const res = await request(app).get('/v1/fragments/' + id[2]).auth('user1@email.com', 'password1');
     expect(res.statusCode).toBe(200);
-    expect(res.body).toBeDefined();
+    expect(res.text).toContain('#This is a markdown test');
   });
 
   test('authenticated user gets an existing fragment by id (text/html type)', async () => {
     const res = await request(app).get('/v1/fragments/' + id[3]).auth('user1@email.com', 'password1');
     expect(res.statusCode).toBe(200);
-    expect(res.body).toBeDefined();
+    expect(res.text).toBe('<h1>This is an HTML test</h1>');
   });
 
   //Testing get /fragments/:id.ext for conversion
-  /*test('authenticated user gets an existing fragment by id and valid conversion (text/plain type)', async () => {
+  test('authenticated user gets an existing fragment by id and valid conversion (text/plain to txt)', async () => {
     const res = await request(app).get('/v1/fragments/' + id[0] + '.txt').auth('user1@email.com', 'password1');
     expect(res.statusCode).toBe(200);
-    expect(res.body.status).toBe('ok');
-    expect((res.body['data'])).toBe('This is a plaintext test');
+    expect(res.text).toBe('This is a plaintext test');
+    expect(res.type).toBe('text/plain');
   });
 
-  test('authenticated user gets an existing fragment by id and valid conversion (application/json type)', async () => {
-    const res = await request(app).get('/v1/fragments/' + id[1] + '.json').auth('user1@email.com', 'password1');
+  test('authenticated user gets an existing fragment by id and valid conversion (application/json to txt', async () => {
+    const res = await request(app).get('/v1/fragments/' + id[1] + '.txt').auth('user1@email.com', 'password1');
     expect(res.statusCode).toBe(200);
-    expect(res.body.status).toBe('ok');
-    expect(res.body['data']['data']).toBe(jsonData);
-  });*/
+    expect(res.text).toBe(JSON.stringify(jsonData));
+    expect(res.type).toBe('text/plain');
+  });
 
-  test('authenticated user gets an existing fragment by id and valid conversion (text/markdown type)', async () => {
+  test('authenticated user gets an existing fragment by id and valid conversion (text/markdown to html)', async () => {
     const res = await request(app).get('/v1/fragments/' + id[2] + '.html').auth('user1@email.com', 'password1');
     expect(res.statusCode).toBe(200);
     expect(res.text).toContain('<p>#This is a markdown test</p>');
+    expect(res.type).toBe('text/html');
   });
 
-  /*test('authenticated user gets an existing fragment by id and valid conversion (text/html type)', async () => {
-    const res = await request(app).get('/v1/fragments/' + id[3] + '.html').auth('user1@email.com', 'password1');
+  test('authenticated user gets an existing fragment by id and valid conversion (text/html to txt)', async () => {
+    const res = await request(app).get('/v1/fragments/' + id[3] + '.txt').auth('user1@email.com', 'password1');
     expect(res.statusCode).toBe(200);
-    expect(res.body.status).toBe('ok');
-    expect((res.body['data'])).toBe('<h1>This is an HTML test</h1>');
-  });*/
+    expect(res.text).toBe('<h1>This is an HTML test</h1>');
+    expect(res.type).toBe('text/plain');
+  });
 
   //Testing invalid extension
-  /*test('authenticated user gets an existing fragment by id but invalid conversion (text/plain type)', async () => {
+  test('authenticated user gets an existing fragment by id but invalid conversion (text/plain type)', async () => {
     const res = await request(app).get('/v1/fragments/' + id[0] + '.md').auth('user1@email.com', 'password1');
     expect(res.statusCode).toBe(415);
   });
@@ -152,17 +153,17 @@ describe('GET /v1/fragments/:id', () => {
   test('authenticated user gets an existing fragment by id but invalid conversion (application/json type)', async () => {
     const res = await request(app).get('/v1/fragments/' + id[1] + '.md').auth('user1@email.com', 'password1');
     expect(res.statusCode).toBe(415);
-  });*/
+  });
 
   test('authenticated user gets an existing fragment by id but invalid conversion (text/markdown type)', async () => {
     const res = await request(app).get('/v1/fragments/' + id[2] + '.json').auth('user1@email.com', 'password1');
     expect(res.statusCode).toBe(415);
   });
 
-  /*test('authenticated user gets an existing fragment by id but invalid conversion (text/html type)', async () => {
+  test('authenticated user gets an existing fragment by id but invalid conversion (text/html type)', async () => {
     const res = await request(app).get('/v1/fragments/' + id[3] + '.md').auth('user1@email.com', 'password1');
     expect(res.statusCode).toBe(415);
-  });*/
+  });
 
   // Valid username/password with non-existant fragment should return 404
   test('authenticated user gets a non-existant fragment by id', async () => {

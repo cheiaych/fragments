@@ -20,12 +20,10 @@ const validTypes = [
   `application/json`,
   `text/markdown`,
   `text/html`,
-  /*
   `image/png`,
   `image/jpeg`,
   `image/webp`,
   `image/gif`,
-  */
 ];
 
 class Fragment {

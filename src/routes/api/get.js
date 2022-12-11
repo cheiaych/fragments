@@ -3,6 +3,7 @@ const { Fragment } = require('../../model/fragment');
 const crypto = require('crypto');
 const { serialize } = require('v8');
 const MarkdownIt = require ('markdown-it');
+const sharp = require ('sharp');
 
 /**
  * Get a list of fragments for the current user
@@ -63,37 +64,43 @@ const MarkdownIt = require ('markdown-it');
       var data = await value.getData();
       if (splitId[1]) {
         switch (value.type) {
-          /*case 'text/plain':
+          case 'text/plain':
             switch(splitId[1]) {
               case 'txt':
                 data = data.toString();
-                break;
-              default:
-                throw 'Invalid conversion for fragment of type ' + value.type;
-            }
-            break;*/
-          case 'text/markdown':
-            switch(splitId[1]) {
-              case 'md':
-                data = data.toString();
-                break;
-              case 'html':
-                data = mdi.render(data.toString());
-                break;
-              case 'txt':
-                data = data.toString();
+                value.type = 'text/plain';
                 break;
               default:
                 throw 'Invalid conversion for fragment of type ' + value.type;
             }
             break;
-          /*case 'text/html':
+          case 'text/markdown':
             switch(splitId[1]) {
-              case 'html':
+              case 'md':
                 data = data.toString();
+                value.type = 'text/markdown';
+                break;
+              case 'html':
+                data = mdi.render(data.toString());
+                value.type = 'text/html';
                 break;
               case 'txt':
                 data = data.toString();
+                value.type = 'text/plain';
+                break;
+              default:
+                throw 'Invalid conversion for fragment of type ' + value.type;
+            }
+            break;
+          case 'text/html':
+            switch(splitId[1]) {
+              case 'html':
+                data = data.toString();
+                value.type = 'text/html';
+                break;
+              case 'txt':
+                data = data.toString();
+                value.type = 'text/plain';
                 break;
               default:
                 throw 'Invalid conversion for fragment of type ' + value.type;
@@ -103,14 +110,16 @@ const MarkdownIt = require ('markdown-it');
             switch(splitId[1]) {
               case 'json':
                 data = data.toJSON();
+                value.type = 'application/json';
                 break;
               case 'txt':
                 data = data.toString();
+                value.type = 'text/plain';
                 break;
               default:
                 throw 'Invalid conversion for fragment of type ' + value.type;
             }
-            break;*/
+            break;
           default:
             break;
         }
