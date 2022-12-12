@@ -121,6 +121,28 @@ const sharp = require ('sharp');
             }
             break;
           default:
+            if (value.type.includes('image')) {
+              switch(splitId[1]) {
+                case 'png':
+                  data = await sharp(data).toFormat('png').toBuffer();
+                  value.type = 'image/png'
+                  break;
+                case 'jpg':
+                  data = await sharp(data).toFormat('jpg').toBuffer();
+                  value.type = 'image/jpeg'
+                  break;
+                case 'webp':
+                  data = await sharp(data).toFormat('webp').toBuffer();
+                  value.type = 'image/webp'
+                  break;
+                case 'gif':
+                  data = await sharp(data).toFormat('gif').toBuffer();
+                  value.type = 'image/gif'
+                  break;
+                default:
+                  break;
+              }
+            }
             break;
         }
       }
