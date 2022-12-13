@@ -28,7 +28,7 @@ const validTypes = [
 
 class Fragment {
 
-  constructor({ id = randomUUID(), ownerId = '', created = (new Date(Date.now())).toString(), updated = JSON.stringify(new Date), type = '', size = 0 }) {
+  constructor({ id = randomUUID(), ownerId = '', created = (new Date(Date.now())).toString(), updated = (new Date(Date.now())).toString(), type = '', size = 0 }) {
     // TODO
     if (ownerId && type) {
       try {
