@@ -28,7 +28,7 @@ const validTypes = [
 
 class Fragment {
 
-  constructor({ id = randomUUID(), ownerId = '', created = new Date(Date.now()), updated = new Date(Date.now()), type = '', size = 0 }) {
+  constructor({ id = randomUUID(), ownerId = '', created = (new Date(Date.now())).toString(), updated = (new Date(Date.now())).toString(), type = '', size = 0 }) {
     // TODO
     if (ownerId && type) {
       try {
@@ -105,7 +105,7 @@ class Fragment {
    */
   save() {
     // TODO
-    this.updated = new Date(Date.now());
+    this.updated = (new Date(Date.now())).toString();
     return writeFragment(this);
   }
 
@@ -130,7 +130,7 @@ class Fragment {
     }
     else
     {
-      this.updated = new Date(Date.now());
+      this.updated = (new Date(Date.now())).toString();
       this.size = data.length;
 
       const dataCopy = data;
