@@ -2,6 +2,7 @@
 
 const request = require('supertest');
 const MarkdownIt = require ('markdown-it');
+const fs = require('fs')
 
 const app = require('../../src/app');
 
@@ -81,6 +82,16 @@ describe('GET /v1/fragments/:id', () => {
       .set('Content-Type', 'text/html')
       .send('<h1>This is an HTML test</h1>')
     id.push(testPost4.body['fragment']['id']);
+
+    const promise = await fs.promises.readFile('./tests/test-data/test.png');
+    const filebuffer = Buffer.from(promise);
+    
+    const testPost5 = await request(app)
+      .post('/v1/fragments')
+      .auth('user1@email.com', 'password1')
+      .set('Content-Type', 'image/png')
+      .send(filebuffer)
+    id.push(testPost5.body['fragment']['id']);
   })  
 
   // If the request is missing the Authorization header, it should be forbidden
@@ -144,6 +155,31 @@ describe('GET /v1/fragments/:id', () => {
     expect(res.type).toBe('text/plain');
   });
 
+  //Testing image conversion
+  test('authenticated user gets an existing fragment by id and valid conversion (image/png to png)', async () => {
+    const res = await request(app).get('/v1/fragments/' + id[4] + '.png').auth('user1@email.com', 'password1');
+    expect(res.statusCode).toBe(200);
+    expect(res.type).toBe('image/png');
+  });
+
+  test('authenticated user gets an existing fragment by id and valid conversion (image/png to jpg)', async () => {
+    const res = await request(app).get('/v1/fragments/' + id[4] + '.jpg').auth('user1@email.com', 'password1');
+    expect(res.statusCode).toBe(200);
+    expect(res.type).toBe('image/jpeg');
+  });
+
+  test('authenticated user gets an existing fragment by id and valid conversion (image/png to webp)', async () => {
+    const res = await request(app).get('/v1/fragments/' + id[4] + '.webp').auth('user1@email.com', 'password1');
+    expect(res.statusCode).toBe(200);
+    expect(res.type).toBe('image/webp');
+  });
+
+  test('authenticated user gets an existing fragment by id and valid conversion (image/png to gif)', async () => {
+    const res = await request(app).get('/v1/fragments/' + id[4] + '.gif').auth('user1@email.com', 'password1');
+    expect(res.statusCode).toBe(200);
+    expect(res.type).toBe('image/gif');
+  });
+
   //Testing invalid extension
   test('authenticated user gets an existing fragment by id but invalid conversion (text/plain type)', async () => {
     const res = await request(app).get('/v1/fragments/' + id[0] + '.md').auth('user1@email.com', 'password1');
@@ -175,7 +211,6 @@ describe('GET /v1/fragments/:id', () => {
   // Valid username/password with existing fragment should return fragment's metadata
   test('authenticated user gets an existing fragment by id with info', async () => {
     const res = await request(app).get('/v1/fragments/' + id[0] + '/info').auth('user1@email.com', 'password1');
-    console.log(res.body)
     expect(res.statusCode).toBe(200);
     expect(res.body.status).toBe('ok');
     expect((res.body)).toBeDefined();
